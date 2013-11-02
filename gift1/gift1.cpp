@@ -8,56 +8,97 @@ LANG: C++
 #include<fstream>
 #include<string>
 #include<vector>
+#include<iterator>
+#include <sstream> 
 using namespace std;
+
+int str2int(string rec_num);
 
 int main()
 {
-	//this is for test
-	ofstream test("gift1.in");
-	test<<"5"<<endl;
-	test<<"dave"<<endl;
-	test<<"laura"<<endl;
-	test<<"laura"<<endl;
-	test<<"owen"<<endl;
-	test<<"vick"<<endl;
-	test<<"amr"<<endl;
-	test<<"dave"<<endl;
-	test<<"200 3"<<endl;
-	test<<"laura"<<endl;
-	test<<"owen"<<endl;
-	test<<"vick"<<endl;
-	test<<"owen"<<endl;
-	test<<"500 1"<<endl;
-	test<<"dave"<<endl;
-	test<<"amr"<<endl;
-	test<<"150 2"<<endl;
-	test<<"vick"<<endl;
-	test<<"owen"<<endl;
-	test<<"laura"<<endl;
-	test<<"0 2"<<endl;
-	test<<"amr"<<endl;
-	test<<"vick"<<endl;
-	test<<"vick"<<endl;
-	test<<"0 0"<<endl;
-	//comment section above when submit
-	ifstream fin("gift1.in");
-	ofstream fout("gift1.out");
-	const int size=20;
-	int NP;
-	string group_mem[size];
-	int i;
-	fin>>NP;
-	for(i=0;i<NP;i++)
-	{
-		fin>>group_mem[i];
-	}
+        //this is for test
+        ofstream test("gift1.in");
+        test<<"5"<<endl;
+        test<<"dave"<<endl;
+        test<<"laura"<<endl;
+        test<<"owen"<<endl;
+        test<<"vick"<<endl;
+        test<<"amr"<<endl;
+        test<<"dave"<<endl;
+        test<<"200 3"<<endl;
+        test<<"laura"<<endl;
+        test<<"owen"<<endl;
+        test<<"vick"<<endl;
+        test<<"owen"<<endl;
+        test<<"500 1"<<endl;
+        test<<"dave"<<endl;
+        test<<"amr"<<endl;
+        test<<"150 2"<<endl;
+        test<<"vick"<<endl;
+        test<<"owen"<<endl;
+        test<<"laura"<<endl;
+        test<<"0 2"<<endl;
+        test<<"amr"<<endl;
+        test<<"vick"<<endl;
+        test<<"vick"<<endl;
+        test<<"0 0"<<endl;
+        //comment section above when submit
 
-	fout<<NP<<endl;
-	
-	for(i=0;i<NP;i++)
-	{
-		fout<<group_mem[i]<<endl;
-	}
+        ifstream fin("gift1.in");
+        ofstream fout("gift1.out");
+        const int size=20;
+        int NP;
+        string group_mem[size];
+        int i;
+		stringstream ss1,ss2;
 
-	return 0;
+        fin>>NP;
+        for(i=0;i<NP;i++)
+        {
+                fin>>group_mem[i];
+        }
+
+        fout<<NP<<endl;
+		for(i=0;i<NP;i++)
+        {
+                fout<<group_mem[i]<<endl;
+        }
+        
+		string money,rec_num;
+		int j;
+		string giver;
+		string rec;
+		int money_int,rec_num_int;
+		
+		
+		while(fin)
+		{
+			fin>>giver;
+			fin>>money;//money to give
+			money_int=str2int(money);
+			fin>>rec_num;//number of receivers
+			rec_num_int=str2int(rec_num);
+			
+			for(j=0;j<rec_num_int;j++)
+			{
+				fin>>rec;//store receivers' name in rec
+			}
+			fout<<"giver is "<<giver<<endl;
+			//fout<<money<<endl;
+			fout<<money_int<<endl;
+			//fout<<rec_num<<endl;
+			fout<<rec_num_int<<endl;
+		
+		}
+		return 0;
+		
+
+}
+int str2int(string str)
+{
+	int integer;
+	stringstream ss;
+	ss<<str;
+	ss>>integer;
+	return integer;
 }

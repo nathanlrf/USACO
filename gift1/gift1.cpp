@@ -43,18 +43,18 @@ int main()
 	ifstream fin("gift1.in");
 	ofstream fout("gift1.out");
 	const int size=20;
-	int group_num;
+	int NP;
 	string group_mem[size];
 	int i;
-	fin>>group_num;
-	for(i=0;i<group_num;i++)
+	fin>>NP;
+	for(i=0;i<NP;i++)
 	{
 		fin>>group_mem[i];
 	}
 
-	fout<<group_num<<endl;
+	fout<<NP<<endl;
 	
-	for(i=0;i<group_num;i++)
+	for(i=0;i<NP;i++)
 	{
 		fout<<group_mem[i]<<endl;
 	}

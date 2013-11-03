@@ -1,0 +1,50 @@
+5
+dave
+laura
+owen
+vick
+amr
+giver is dave
+dave's index is 0
+receivers are
+laura	index is 1
+owen	index is 2
+vick	index is 3
+200
+3
+dave's money is -198
+receiver's money
+laura	66
+owen	66
+vick	66
+giver is owen
+owen's index is 2
+receivers are
+dave	index is 0
+500
+1
+owen's money is -434
+receiver's money
+dave	302
+giver is amr
+amr's index is 4
+receivers are
+vick	index is 3
+owen	index is 2
+150
+2
+amr's money is -150
+receiver's money
+vick	141
+owen	-359
+giver is laura
+laura's index is 1
+receivers are
+amr	index is 4
+vick	index is 3
+0
+2
+laura's money is 66
+receiver's money
+amr	-150
+vick	141

@@ -21,6 +21,7 @@ int index(string name,string* arr_ptr,int NP);
 
 int main()
 {
+	/*
         //this is for test
         ofstream test("gift1.in");
         test<<"5"<<endl;
@@ -48,62 +49,75 @@ int main()
         test<<"vick"<<endl;
         test<<"0 0"<<endl;
         //comment section above when submit
-
+*/
         ifstream fin("gift1.in");
         ofstream fout("gift1.out");
-        const int size=20;
-        int NP;
+        const int size=15;
+        int NP=0;
         string group_mem[size];
 		int mem_money[size];
-        int i;
+        int i=0;
 
         fin>>NP;
-        for(i=0;i<NP;i++)
+
+        for(i=0;i<NP;i++)//read group from gift1.in
         {
                 fin>>group_mem[i];
 				mem_money[i]=0;//initialize mem_money to 0
         }
 
-        fout<<NP<<endl;
+ /*		display NP to file
+		fout<<NP<<endl;
 		for(i=0;i<NP;i++)
         {
                 fout<<group_mem[i]<<endl;
         }
-		
+*/		
 		string money,rec_num;
-		int j,temp;
+		int money_int=0,rec_num_int=0;
+
+		int j=0,temp=0;//array index
+
 		string giver;
-		string rec[size];
-		int money_int,rec_num_int;
+		string rec[size];//receivers
 		
-		
-	//	while(fin)
-	//	{
+
+		while(fin)
+		{
 			fin>>giver;
 		
 			fin>>money;//money to give
 			money_int=str2int(money);
 			fin>>rec_num;//number of receivers
 			rec_num_int=str2int(rec_num);
-
-			mem_money[index(giver,group_mem,NP)]+=money_int%rec_num_int-money_int;
+			
+			//warning: if rec_num_int=0 error will occur with %
+			if(rec_num_int)
+				mem_money[index(giver,group_mem,NP)]+=money_int%rec_num_int-money_int;//giver money=left-give+money
+			else
+				mem_money[index(giver,group_mem,NP)]=mem_money[index(giver,group_mem,NP)];
 			
 			for(j=0;j<rec_num_int;j++)
 			{
 				fin>>rec[j];//store receivers' name in rec
-				temp=index(rec[j],group_mem,NP);
-				mem_money[temp]+=money_int/rec_num_int;
+				temp=index(rec[j],group_mem,NP);//find this receiver
+				//warning: if rec_num_int=0 error will occur with %
+				if(rec_num_int)
+					mem_money[temp]+=money_int/rec_num_int;//giver money=left-give+money
+				else
+					mem_money[temp]=mem_money[index(giver,group_mem,NP)];//receiver money=give+money
 			}
-
+		}
+//output
+		/*
 			fout<<"giver is "<<giver<<endl;
 			fout<<giver<<"'s index is "<<index(giver,group_mem,NP)<<endl;
 			fout<<"receivers are"<<endl;
-		//	for(j=0;j<rec_num_int;j++)
-		//	{
-				j=0;
+			for(j=0;j<rec_num_int;j++)
+			{
 				temp=index(rec[j],group_mem,NP);
 				fout<<rec[j]<<'\t'<<"index is "<<temp<<endl;//store receivers' name in rec
-		//	}
+			}
 			
 			//fout<<money<<endl;
 			fout<<money_int<<endl;
@@ -115,13 +129,19 @@ int main()
 			{
 				fout<<rec[j]<<'\t'<<mem_money[index(rec[j],group_mem,NP)]<<endl;//store receivers' name in rec
 			}
-
-	//	}
+		*/
+	for(j=0;j<NP;j++)
+		{
+			fout<<group_mem[j]<<" "<<mem_money[j]<<endl;
+		
+		}
+		
 		return 0;
 		
 
 }
-int str2int(string str)
+
+int str2int(string str)//string number to integer
 {
 	int integer;
 	stringstream ss;
@@ -129,6 +149,7 @@ int str2int(string str)
 	ss>>integer;
 	return integer;
 }
+
 int index(string name,string* arr_ptr,int NP)//find index of a given name, error return 111
 {
 	int i,mem_num;

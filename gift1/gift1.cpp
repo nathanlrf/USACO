@@ -54,13 +54,14 @@ int main()
         const int size=20;
         int NP;
         string group_mem[size];
+		int mem_money[size];
         int i;
-		stringstream ss1,ss2;
 
         fin>>NP;
         for(i=0;i<NP;i++)
         {
                 fin>>group_mem[i];
+				mem_money[i]=0;//initialize mem_money to 0
         }
 
         fout<<NP<<endl;
@@ -70,9 +71,9 @@ int main()
         }
 		
 		string money,rec_num;
-		int j;
+		int j,temp;
 		string giver;
-		string rec;
+		string rec[size];
 		int money_int,rec_num_int;
 		
 		
@@ -84,18 +85,37 @@ int main()
 			money_int=str2int(money);
 			fin>>rec_num;//number of receivers
 			rec_num_int=str2int(rec_num);
+
+			mem_money[index(giver,group_mem,NP)]+=money_int%rec_num_int-money_int;
 			
-	//		for(j=0;j<rec_num_int;j++)
-	//		{
-	//			fin>>rec;//store receivers' name in rec
-	//		}
+			for(j=0;j<rec_num_int;j++)
+			{
+				fin>>rec[j];//store receivers' name in rec
+				temp=index(rec[j],group_mem,NP);
+				mem_money[temp]+=money_int/rec_num_int;
+			}
+
 			fout<<"giver is "<<giver<<endl;
 			fout<<giver<<"'s index is "<<index(giver,group_mem,NP)<<endl;
+			fout<<"receivers are"<<endl;
+		//	for(j=0;j<rec_num_int;j++)
+		//	{
+				j=0;
+				temp=index(rec[j],group_mem,NP);
+				fout<<rec[j]<<'\t'<<"index is "<<temp<<endl;//store receivers' name in rec
+		//	}
+			
 			//fout<<money<<endl;
 			fout<<money_int<<endl;
 			//fout<<rec_num<<endl;
 			fout<<rec_num_int<<endl;
-		
+			fout<<giver<<"'s money is "<<mem_money[index(giver,group_mem,NP)]<<endl;
+			fout<<"receiver's money"<<endl;
+			for(j=0;j<rec_num_int;j++)
+			{
+				fout<<rec[j]<<'\t'<<mem_money[index(rec[j],group_mem,NP)]<<endl;//store receivers' name in rec
+			}
+
 	//	}
 		return 0;
 		
@@ -111,12 +131,12 @@ int str2int(string str)
 }
 int index(string name,string* arr_ptr,int NP)//find index of a given name, error return 111
 {
-	int i;
+	int i,mem_num;
+	mem_num=111;
 	for(i=0;i<NP;i++)
 	{
 		if(arr_ptr[i]==name)
-			return i;
-		else
-			return 111;
+			mem_num=i;
 	}
+	return mem_num;
 }

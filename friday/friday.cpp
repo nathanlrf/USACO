@@ -28,7 +28,7 @@ int main()
 	int _31_day[7];
 	int _30_day[4];
 	int month[month_size];
-	int Feb;
+	int Feb;//depends on leap(N)
 	int N;
 	int i;
 

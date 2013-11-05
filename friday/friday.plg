@@ -6,20 +6,20 @@
 --------------------Configuration: friday - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\NATHAN~1\AppData\Local\Temp\RSP5CC4.tmp" with contents
+Creating temporary file "C:\Users\NATHAN~1\AppData\Local\Temp\RSP97EF.tmp" with contents
 [
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/friday.pdb" /debug /machine:I386 /out:"Debug/friday.exe" /pdbtype:sept 
-.\Debug\friday.obj
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/friday.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Users\nathanlrf\USACO\friday\friday.cpp"
 ]
-Creating command line "link.exe @C:\Users\NATHAN~1\AppData\Local\Temp\RSP5CC4.tmp"
+Creating command line "cl.exe @C:\Users\NATHAN~1\AppData\Local\Temp\RSP97EF.tmp" 
 <h3>Output Window</h3>
-Linking...
-LINK : LNK6004: Debug/friday.exe not found or not built by the last incremental link; performing full link
+Compiling...
+friday.cpp
 
 
 
 <h3>Results</h3>
-friday.exe - 0 error(s), 0 warning(s)
+friday.obj - 0 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

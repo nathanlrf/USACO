@@ -27,19 +27,17 @@ int main()
 	int week[week_size];//week[0]=Monday,week[6]=Sunday
 	int month[month_size];
 
-	int Feb;//depend on leap year
 	int N;//how many years
 	int i,j;//array index
 	int temp;//calculate the cycle of weeks
 
 	fin>>N;
-	Feb=leap(N);
 	end_year=start_year+N;
 	//initialize week[]
 	for(i=0;i<week_size;i++)
 	{
 		if(i==5)
-			week[i]=1;
+			week[i]=1;//jan 13th is sat
 		else	
 			week[i]=0;
 	}
@@ -63,7 +61,7 @@ int main()
 			if(3==i||5==i||8==i||10==i)
 				month[i]=30;
 			else if(i==1)
-				month[i]=leap(j+1900);
+				month[i]=leap(j);
 			else
 				month[i]=31;
 		}

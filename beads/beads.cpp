@@ -17,7 +17,7 @@ int main()
 {
 	ofstream test("bead.in");
 	test<<29<<endl;
-	test<<"wwwbbrwrbrbrrbrbrwrwwrbwrwrbb"<<endl;
+	test<<"wwwbbrwrbrbrrbrbrwrwwrbwrwrrr"<<endl;
 
 	ifstream fin("bead.in");
 	ofstream fout("bead.out");
@@ -37,7 +37,7 @@ int main()
 	vector<char>::iterator iter=necklace.begin();
 
 	int L2R,R2L;
-	int sum,new_sum;
+	int sum,new_sum=0;
 	int left_ptr,right_ptr;
 	left_ptr=0;
 	right_ptr=N-1-left_ptr;
@@ -46,10 +46,11 @@ int main()
 	sum=L2R+R2L;
 //output
 	fout<<N<<endl;
-	fout<<beads<<endl;
+//	fout<<beads<<endl;
 	for(iter=necklace.begin();iter!=necklace.end();iter++)
 		fout<<*iter;
 	fout<<endl;
+	fout<<"break between "<<left_ptr<<" and "<<right_ptr<<endl;
 	fout<<"from left end to count "<<L2R<<endl;
 	fout<<"from right end to count "<<R2L<<endl;
 	fout<<"the sum of the same color are "<<sum<<endl;
@@ -59,28 +60,69 @@ int main()
 
 int cnt_L2R(vector<char>::iterator iter,vector<char>::iterator iter_end)
 {
-	int cnt;
+	int cnt=0;
 	char start;
 	start=*iter;
-	for(cnt=0;iter!=iter_end;iter++)
+	if(start!='w')//start is b or r
 	{
-		if(*iter==start)
-			++cnt;
-		else
-			return cnt;
+		for(cnt=0;iter!=iter_end;iter++)
+		{
+			if(*iter==start||*iter=='w')//++cnt when meet with same color or w
+				++cnt;
+			else
+				return cnt;
+		}	
+
 	}
+	else//start with w
+	{
+		while(*iter=='w'&&iter!=iter_end)
+		{
+			++cnt;
+			++iter;
+		}
+		for(start=*iter;iter!=iter_end;iter++)
+		{
+			if(*iter==start||*iter=='w')//++cnt when meet with same color or w
+				++cnt;
+			else
+				return cnt;
+		}	
+
+	}
+	
 }
 
 int cnt_R2L(vector<char>::iterator iter,vector<char>::iterator iter_begin)
 {
-	int cnt;
+	int cnt=0;
 	char start;
 	start=*iter;
-	for(cnt=0;iter!=iter_begin;iter--)//from right end to left
+	if(start!='w')//start is b or r
 	{
-		if(*iter==start)
+		for(cnt=0;iter!=(iter_begin-1);iter--)
+		{
+			if(*iter==start||*iter=='w')//++cnt when meet with same color or w
+				++cnt;
+			else
+				return cnt;
+		}	
+
+	}
+	else//start with w
+	{
+		while(*iter=='w'&&iter!=(iter_begin-1))
+		{
 			++cnt;
-		else
-			return cnt;
+			++iter;
+		}
+		for(start=*iter;iter!=(iter_begin-1);iter--)//here *iter is b or r same as not-w start
+		{
+			if(*iter==start||*iter=='w')//++cnt when meet with same color or w
+				++cnt;
+			else
+				return cnt;
+		}	
+
 	}
 }

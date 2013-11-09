@@ -14,10 +14,11 @@ using namespace std;
 int main()
 {
 	ofstream test("milk2.in");
-    test<<1<<endl;
+    test<<4<<endl;
     test<<100<<" "<<200<<endl;
-//	test<<700<<" "<<1200<<endl;
-//	test<<1500<<" "<<2100<<endl;
+	test<<201<<" "<<301<<endl;
+	test<<302<<" "<<402<<endl;
+	test<<403<<" "<<503<<endl;
         
     ifstream fin("milk2.in");
     ofstream fout("milk2.out");
@@ -35,9 +36,33 @@ int main()
 		fin>>farmer[i][0];
 		fin>>farmer[i][1];
 	}
-	i=0;//reinitialize i
-	int con_temp,idle_temp,start,end;
-	start=farmer[0][0];//initialize start to first farmer start time
+
+	int con_temp=0,idle_temp=0,start,end;
+//initialize start to first farmer start time
+	start=farmer[0][0];
+	end=farmer[0][1];
+	continous=end-start;
+	
+	for(i=0;i<N;i++)
+	{
+		if(N>1)//N must be bigger than 1
+		{
+			if(farmer[i][1]>=farmer[i+1][0])
+			{
+				end=farmer[i+1][1];
+				con_temp=end-start;
+			}
+			else
+			{
+				start=farmer[i+1][0];
+				idle_temp=start-farmer[i][1];
+			}
+			continous=(con_temp>continous)?con_temp:continous;
+			idle=(idle_temp>idle)?idle_temp:idle;
+		}
+
+	}
+/* v 1.0:	wrong when N=4
 	while(i<N)
 	{
 		//interval=farmer[i+1][0]-farmer[i][0];//time diffrence in start time
@@ -67,7 +92,7 @@ int main()
 		}
 		
 	}
-
+*/
 //output
 //	fout<<N<<endl;
 /*	for(i=0;i<N;i++)

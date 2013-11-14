@@ -12,23 +12,23 @@ using namespace std;
 
 
 int main()
-{
+{/*
 	ofstream test("milk2.in");
     test<<4<<endl;
     test<<100<<" "<<200<<endl;
 	test<<201<<" "<<301<<endl;
 	test<<302<<" "<<402<<endl;
 	test<<403<<" "<<503<<endl;
-        
+   */     
     ifstream fin("milk2.in");
     ofstream fout("milk2.out");
 
-	int N;//1~5000
+	unsigned int N;//1~5000
 	const int size=5000;
 	unsigned int farmer[size][2];//1~1000000
 	int i=0;
 	//result
-	int continous=0,idle=0;
+	unsigned int continous=0,idle=0;
 
 	fin>>N;
 	for(i=0;i<N;i++)
@@ -37,70 +37,63 @@ int main()
 		fin>>farmer[i][1];
 	}
 
-	int con_temp=0,idle_temp=0,start,end;
+	int j,temp0=0,temp1=0;//插入排序
+	for(j=0;j<N;j++)//
+		for(i=0;i<N-j-1;i++)//第j趟就比较N-j次，共比较4+3+2+1=10次
+			if(farmer[i][0]>farmer[i+1][0])
+			{
+
+				temp0=farmer[i][0];
+				farmer[i][0]=farmer[i+1][0];
+				farmer[i+1][0]=temp0;
+				temp1=farmer[i][1];
+				farmer[i][1]=farmer[i+1][1];
+				farmer[i+1][1]=temp1;
+			}
+
+
+
+	int con_temp=0,idle_temp=0;
 //initialize start to first farmer start time
-	start=farmer[0][0];
-	end=farmer[0][1];
-	continous=end-start;
+	int interval[size][2];
+	interval[0][0]=farmer[0][0];//start
+	interval[0][1]=farmer[0][1];//end
 	
-	for(i=0;i<N;i++)
+//reform the intervals	
+	for(i=0,j=0;i<N-1;i++)
 	{
 		if(N>1)//N must be bigger than 1
 		{
-			if(farmer[i][1]>=farmer[i+1][0])
+			if(interval[j][1]>=farmer[i+1][0])
 			{
-				end=farmer[i+1][1];
-				con_temp=end-start;
+				interval[j][0]=(farmer[i+1][0]<interval[j][0])?farmer[i+1][0]:interval[j][0];
+				interval[j][1]=(farmer[i+1][1]>interval[j][1])?farmer[i+1][1]:interval[j][1];
+			//	con_temp=end[j]-start[j];
 			}
 			else
 			{
-				start=farmer[i+1][0];
-				idle_temp=start-farmer[i][1];
+				++j;//j indicate how many intervals there are 
+				interval[j][0]=farmer[i+1][0];
+				interval[j][1]=farmer[i+1][1];
 			}
-			continous=(con_temp>continous)?con_temp:continous;
-			idle=(idle_temp>idle)?idle_temp:idle;
 		}
 
 	}
-/* v 1.0:	wrong when N=4
-	while(i<N)
+	//initializing con_temp and continous to find biggest continous & idle
+	con_temp=interval[i][1]-interval[i][0];
+	continous=interval[0][1]-interval[0][0];
+	idle_temp=(j>1)?(interval[1][0]-interval[0][1]):0;
+	idle=0;
+	for(i=0;i<=j;i++)
 	{
-		//interval=farmer[i+1][0]-farmer[i][0];//time diffrence in start time
-		if(N==1)
-		{
-			continous=farmer[i][1]-farmer[i][0];
-			idle=0;
-			break;
-		}
-		else
-		{
-			if(farmer[i][1]>=farmer[i+1][0])//at least one cow is milking
-			{
-				end=farmer[i+1][1];
-				con_temp=end-start;
-			}
-			else//no milking
-			{
-				start=farmer[i+1][0];//start at next farmer
-				idle_temp=farmer[i+1][0]-farmer[i][1];
-			}
-			if(con_temp>continous)
-				continous=con_temp;
-			if(idle_temp>idle)
-				idle=idle_temp;
-			++i;
-		}
-		
+		con_temp=interval[i][1]-interval[i][0];	
+		continous=(con_temp>continous)?con_temp:continous;
 	}
-*/
-//output
-//	fout<<N<<endl;
-/*	for(i=0;i<N;i++)
+	for(i=0;i<=j-1;i++)
 	{
-		fout<<farmer[i][0]<<endl;
-		fout<<farmer[i][1]<<endl;
+		idle_temp=interval[i+1][0]-interval[i][1];
+		idle=(idle_temp>idle)?idle_temp:idle;
 	}
-*/
 	fout<<continous<<" "<<idle<<endl;
 
 	return 0;
